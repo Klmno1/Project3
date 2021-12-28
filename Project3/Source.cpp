@@ -2,6 +2,6 @@
 using namespace std;
 int main()
 {
-	cout << "This is a book.";
+	cout << "This is a book." << endl;
 	return 0;
 }
