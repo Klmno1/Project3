@@ -1,7 +1,25 @@
-#include <iostream>
-using namespace std;
+#include <SFML/Graphics.hpp>
+using namespace sf;
+
 int main()
 {
-	cout << "This is a book." << endl;
-	return 0;
+    RenderWindow window(VideoMode(200, 200), "SFML works!");
+    CircleShape shape(100.f);
+    shape.setFillColor(Color::Green);
+
+    while (window.isOpen())
+    {
+        Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == Event::Closed)
+                window.close();
+        }
+
+        window.clear();
+        window.draw(shape);
+        window.display();
+    }
+
+    return 0;
 }
