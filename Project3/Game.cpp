@@ -31,7 +31,7 @@ Game::~Game()
 void Game::update()
 {
 	this->pollEvents();
-
+	this->map.update();
 	this->player.update();
 }
 
@@ -42,6 +42,8 @@ void Game::render()
 	// Render 
 	this->background.show(this->window);
 	this->player.render(this->window);
+	this->floor.render(this->window);
+	this->map.render(this->window);
 
 	this->window->display();
 }
@@ -66,6 +68,11 @@ void Game::pollEvents()
 			break;
 		}
 	}
+}
+
+void Game::updateCollision()
+{
+
 }
 
 

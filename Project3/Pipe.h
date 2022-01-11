@@ -4,19 +4,18 @@
 #include <SFML/System.hpp>
 using namespace sf;
 
-class Brick
+class Pipe
 {
 private:
 	Sprite sprite;
-	int type;
 
 public:
-	Brick();
-	Brick(Texture* texture);
-	~Brick();
-	
-	int getBrickWidth();
-	int getBrickHeight();
+	Pipe();
+	Pipe(Texture* texture);
+	~Pipe();
+
+	int getPipeWidth();
+	int getPipeHeight();
 	void setPosition(Vector2f position);
 	void render(RenderTarget* window);
 };

@@ -3,21 +3,18 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 using namespace sf;
-
-class Brick
+class Floor
 {
 private:
 	Sprite sprite;
-	int type;
+	Texture texture;
 
 public:
-	Brick();
-	Brick(Texture* texture);
-	~Brick();
-	
-	int getBrickWidth();
-	int getBrickHeight();
-	void setPosition(Vector2f position);
+	Floor();
+	virtual ~Floor();
+
+	int getWidth();
+	int getHeight();
 	void render(RenderTarget* window);
 };
 

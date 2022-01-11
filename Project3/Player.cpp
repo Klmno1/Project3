@@ -26,6 +26,16 @@ Player::~Player()
 
 }
 
+int Player::getWidth()
+{
+	return this->shape.getSize().x;
+}
+
+int Player::getHeight()
+{
+	return this->shape.getSize().y;
+}
+
 void Player::updateInput()
 {
 	//Keyboard input   moving character
