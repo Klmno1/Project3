@@ -5,6 +5,7 @@
 
 #include "Player.h"  // Player.h include SFML
 #include "Background.h"
+#include "Map.h"
 
 using namespace sf;
 using namespace std;

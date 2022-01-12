@@ -4,13 +4,13 @@
 
 using namespace std;
 
-bool check = true;
-
 Map::Map()
 {
-	this->brickNumber = BRICK3;
-	this->pipeNumber = PIPE2;
+	this->brickNumber = BRICK1;
+	this->pipeNumber = PIPE1;
 	this->initTexture();
+	this->spawnPipe();
+	this->spawnBrick();
 }
 
 Map::~Map()
@@ -50,6 +50,7 @@ void Map::changeBrickNum(const int playerPosition)
 		this->brickNumber = BRICK4;
 		break;
 	}
+	
 }
 
 void Map::changePipeNum(const int playerPosition)
@@ -131,11 +132,10 @@ void Map::initPosition(const int playerPosition, const Floor floor)
 		for (int i = 0; i < this->pipeNumber; i++)
 		{
 			this->pipePosition.push_back(Vector2f(
-				30.f + this->pipe[0]->getPipeWidth() + static_cast<float>(i) * 150.f,
+				100.f + static_cast<float>(i)*this->pipe[0]->getPipeWidth() + static_cast<float>(i) * 30.f,
 				350.f - i*50.f
 			));
 		}
-		
 		break;
 
 	case LEVEL3:
@@ -145,14 +145,15 @@ void Map::initPosition(const int playerPosition, const Floor floor)
 			if (i % 2 == 0)
 			{
 				this->brickPosition.push_back(Vector2f(
-					150.f + static_cast<float>(i / 2) * 150.f, floor.getSprite().getPosition().y
+					150.f + static_cast<float>(i / 2) * 150.f,
+					floor.getSprite().getPosition().y - this->brick[0]->getBrickHeight()
 				));
 			}
 			else
 			{
 				this->brickPosition.push_back(Vector2f(
 					150.f + static_cast<float>(i / 2) * 150.f,
-					static_cast <float> (floor.getSprite().getPosition().y + this->brick[0]->getBrickHeight())
+					static_cast <float> (floor.getSprite().getPosition().y - 2*this->brick[0]->getBrickHeight())
 				));
 			}
 		}
@@ -162,7 +163,7 @@ void Map::initPosition(const int playerPosition, const Floor floor)
 	case LEVEL4:
 
 		this->pipePosition.push_back(Vector2f(
-			150.f, floor.getSprite().getPosition().y - 250.f
+			100.f, floor.getSprite().getPosition().y - 200.f
 		));
 
 		for (int i = 0; i < this->brickNumber; i++)
@@ -195,17 +196,20 @@ void Map::setPipePosition()
 	}
 }
 
-void Map::update(const int playerPosition, const Floor floor)
+void Map::update(const int playerPosition, const Floor floor, Player& player)
 {
-	if (check)
-	{
-		this->spawnPipe();
-		this->spawnBrick();
-		check = false;
-	}
 	this->changePipeNum(playerPosition);
 	this->changeBrickNum(playerPosition);
 	this->initPosition(playerPosition,floor);
+
+	for (int i = 0; i < this->brickNumber; i++)
+	{
+		(*this->brick[i]).update(player);
+	}
+	for (int i = 0; i < this->pipeNumber; i++)
+	{
+		(*this->pipe[i]).update(player);
+	}
 }
 
 void Map::render(RenderTarget* window)

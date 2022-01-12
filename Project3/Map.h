@@ -4,7 +4,6 @@
 
 #include "Brick.h"
 #include "Pipe.h"
-#include "Player.h"
 
 using namespace std;
 using namespace sf;
@@ -58,7 +57,7 @@ public:
 	void setBrickPosition();
 	void setPipePosition();
 
-	void update(const int playerPosition, const Floor floor);
+	void update(const int playerPosition, const Floor floor, Player& player);
 	void render(RenderTarget* window);
 	
 };

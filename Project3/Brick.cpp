@@ -1,16 +1,10 @@
 #include "Brick.h"
 
-enum BrickType
-{
-	BREAKABLE = 0,
-	UNBREAKABLE,
-	NUMOFTYPES
-};
-
 
 Brick::Brick()
 {
 	this->type = BrickType::UNBREAKABLE;
+	this->afterBreak.loadFromFile("../Project3/Block.jfif");
 }
 
 Brick::Brick(Texture* texture)
@@ -37,6 +31,22 @@ int Brick::getBrickHeight()
 void Brick::setPosition(Vector2f position)
 {
 	this->sprite.setPosition(position);
+}
+
+void Brick::updateCollision(Player& player)
+{
+	if (this->sprite.getGlobalBounds().intersects(player.getShape().getGlobalBounds()))
+	{
+		if (this->sprite.getPosition().y > player.getShape().getPosition().y)
+		{
+			this->sprite.setTexture(this->afterBreak);
+		}
+	}
+}
+
+void Brick::update(Player& player)
+{
+	this->updateCollision(player);
 }
 
 void Brick::render(RenderTarget* window)

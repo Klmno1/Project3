@@ -15,7 +15,7 @@ void Player::initShape()
 
 void Player::initPosition(float x,float y)
 {
-	this->shape.setPosition(Vector2f(0.f,0.f)); // set player position
+	this->shape.setPosition(Vector2f(x,y)); // set player position
 }
 
 
@@ -31,7 +31,7 @@ Player::~Player()
 
 }
 
-const RectangleShape& Player::getShape() const
+RectangleShape& Player::getShape() 
 {
 	return this->shape;
 }

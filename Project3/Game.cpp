@@ -34,9 +34,9 @@ Game::~Game()
 
 void Game::update()
 {
-	this->player.update(this->window, this->floor.getSprite(), this->playerPosition,this->maxLevel);
 	this->pollEvents();
-	this->map.update(this->playerPosition, this->floor);
+	this->player.update(this->window, this->floor.getSprite(), this->playerPosition,this->maxLevel);
+	this->map.update(this->playerPosition, this->floor, this->player);
 }
 
 void Game::render()
