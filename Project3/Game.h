@@ -12,15 +12,16 @@ using namespace std;
 class Game
 {
 private:
-
+	int playerPosition;
+	int maxLevel;
 	VideoMode videoMode; // sf
 	RenderWindow* window; // sf
 	bool endGame;
 	Event sfmlEvent; // sf
 
+	Floor floor;
 	Player player;
 	Background background;
-	Floor floor;
 	Map map;
 
 	void initWindow();
@@ -41,5 +42,4 @@ public:
 
 	const bool running() const; // check if still running 
 	void pollEvents();
-	void updateCollision();
 };

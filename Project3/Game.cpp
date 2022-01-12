@@ -1,5 +1,7 @@
 #include "Game.h"
 
+using namespace std;
+
 void Game::initWindow()
 {
 	this->videoMode = VideoMode(800, 600);
@@ -11,6 +13,8 @@ void Game::initWindow()
 
 void Game::initVar()
 {
+	this->maxLevel = 4;
+	this->playerPosition = 1;
 	this->endGame = false;
 }
 
@@ -30,9 +34,9 @@ Game::~Game()
 
 void Game::update()
 {
+	this->player.update(this->window, this->floor.getSprite(), this->playerPosition,this->maxLevel);
 	this->pollEvents();
-	this->map.update();
-	this->player.update();
+	this->map.update(this->playerPosition, this->floor);
 }
 
 void Game::render()
@@ -70,10 +74,6 @@ void Game::pollEvents()
 	}
 }
 
-void Game::updateCollision()
-{
-
-}
 
 
 

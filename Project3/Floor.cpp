@@ -9,6 +9,11 @@ Floor::~Floor()
 {
 }
 
+const Sprite& Floor::getSprite() const
+{
+	return this->sprite;
+}
+
 int Floor::getWidth()
 {
 	return this->sprite.getTexture()->getSize().x;

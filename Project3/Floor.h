@@ -13,6 +13,7 @@ public:
 	Floor();
 	virtual ~Floor();
 
+	const Sprite& getSprite() const;
 	int getWidth();
 	int getHeight();
 	void render(RenderTarget* window);

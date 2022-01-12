@@ -13,17 +13,27 @@ void Player::initShape()
 
 }
 
-Player::Player(float x, float y)
+void Player::initPosition(float x,float y)
 {
-	this->shape.setPosition(x, y); // set player position
+	this->shape.setPosition(Vector2f(0.f,0.f)); // set player position
+}
 
+
+Player::Player()
+{
 	this->initVar();
 	this->initShape();
+	this->initPosition();
 }
 
 Player::~Player()
 {
 
+}
+
+const RectangleShape& Player::getShape() const
+{
+	return this->shape;
 }
 
 int Player::getWidth()
@@ -35,6 +45,38 @@ int Player::getHeight()
 {
 	return this->shape.getSize().y;
 }
+
+void Player::updatePlayerPosition(const RenderTarget* target,int& playerPosition, const int maxLevel)
+{
+	// left
+	if (this->shape.getGlobalBounds().left < 0)  // .left() x-axis
+	{
+		if(playerPosition > 1)
+			playerPosition -= 1;
+		this->shape.setPosition(Vector2f(target->getSize().x - this->shape.getSize().x, 0.f));
+	}
+
+	// right
+	if (this->shape.getGlobalBounds().left + this->shape.getGlobalBounds().width > target->getSize().x)
+	{
+		if(playerPosition != maxLevel)
+			playerPosition += 1;
+		this->shape.setPosition(Vector2f(0.f, 0.f));
+	}
+}
+
+void Player::updateFloorCollision(const Sprite& floor)
+{
+	if (this->shape.getGlobalBounds().intersects(
+		floor.getGlobalBounds()
+	))
+	{
+		this->shape.setPosition(Vector2f(
+			this->shape.getPosition().x, floor.getPosition().y - this->shape.getSize().y
+		));
+	}
+}
+
 
 void Player::updateInput()
 {
@@ -58,12 +100,13 @@ void Player::updateInput()
 	}
 }
 
-void Player::update()
+void Player::update(const RenderTarget* target, const Sprite floor, int& playerPosition, const int maxLevel)
 {
-	//Window bounds collision
-
+	this->updatePlayerPosition(target, playerPosition, maxLevel);
+	this->updateFloorCollision(floor);
 	this->updateInput();
 }
+
 
 void Player::render(RenderTarget* target)
 {
