@@ -1,7 +1,7 @@
 #include "Pipe.h"
+
 #include <iostream>
 using namespace std;
-
 Pipe::Pipe()
 {
 }
@@ -39,24 +39,34 @@ void Pipe::updateCollision(Player& player)
 {
 	if (this->sprite.getGlobalBounds().intersects(player.getShape().getGlobalBounds()))
 	{
-		if (player.getShape().getPosition().x >= this->sprite.getPosition().x
-			and player.getShape().getPosition().y < this->sprite.getPosition().y)
-			player.getShape().setPosition(Vector2f(
-				this->sprite.getPosition().x + this->sprite.getTexture()->getSize().x,
-				player.getShape().getPosition().y
-			));
-
-		else if (player.getShape().getPosition().x < this->sprite.getPosition().x
-			and player.getShape().getPosition().y < this->sprite.getPosition().y)
-			player.getShape().setPosition(Vector2f(
-				this->sprite.getPosition().x - player.getShape().getPosition().x,
-				player.getShape().getPosition().y
-			));
-		else if (player.getShape().getPosition().y > this->sprite.getPosition().y)
-			player.getShape().setPosition(Vector2f(
-				player.getShape().getPosition().x,
-				this->sprite.getPosition().y + player.getShape().getSize().y
-			));
+		
+		if (player.getShape().getPosition().x > this->sprite.getPosition().x and this->sprite.getPosition().y < player.getShape().getPosition().y)
+		{
+			player.getShape().setPosition(
+				Vector2f(
+					this->sprite.getPosition().x + this->sprite.getTexture()->getSize().x + 1.f,
+					player.getShape().getPosition().y
+				)
+			);
+		}
+		else if (player.getShape().getPosition().x < this->sprite.getPosition().x and this->sprite.getPosition().y < player.getShape().getPosition().y)
+		{
+			player.getShape().setPosition(
+				Vector2f(
+					this->sprite.getPosition().x - player.getShape().getSize().x - 1.f,
+					player.getShape().getPosition().y
+				)
+			);
+		}
+		else if (this->sprite.getPosition().y > player.getShape().getPosition().y)
+		{
+			player.getShape().setPosition(
+				Vector2f(
+					player.getShape().getPosition().x,
+					this->sprite.getPosition().y -  player.getShape().getSize().y
+				)
+			);
+		}
 	}
 }
 

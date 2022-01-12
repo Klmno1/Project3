@@ -17,19 +17,18 @@ class Brick
 {
 private:
 	Sprite sprite;
-	Texture afterBreak;
 	int type;
 
 public:
-	Brick();
 	Brick(Texture* texture);
 	~Brick();
 	
+	Sprite& getSprite();
 	int getBrickWidth();
 	int getBrickHeight();
 	void setPosition(Vector2f position);
 
-	void updateCollision(Player& player);
+	bool updateCollision(Player& player);
 	void update(Player& player);
 	void render(RenderTarget* window);
 };

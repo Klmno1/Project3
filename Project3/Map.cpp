@@ -3,14 +3,13 @@
 #include "Map.h"
 
 using namespace std;
-
+bool check = true;
 Map::Map()
 {
 	this->brickNumber = BRICK1;
 	this->pipeNumber = PIPE1;
 	this->initTexture();
-	this->spawnPipe();
-	this->spawnBrick();
+	
 }
 
 Map::~Map()
@@ -78,7 +77,7 @@ void Map::changePipeNum(const int playerPosition)
 
 void Map::spawnBrick()
 {
-	for (int i = 0; i < this->brickNumber; i++)
+	for (int i = 0; i < BRICK3; i++)
 	{
 		this->brick.push_back(new Brick(this->texture["BRICK"]));
 	}
@@ -86,7 +85,7 @@ void Map::spawnBrick()
 
 void Map::spawnPipe()
 {	
-	for (int i = 0; i < this->pipeNumber; i++)
+	for (int i = 0; i < PIPE2; i++)
 	{
 		this->pipe.push_back(new Pipe(this->texture["PIPE"]));
 	}
@@ -97,8 +96,11 @@ void Map::initTexture()
 {
 	this->texture["BRICK"] = new Texture();
 	this->texture["PIPE"] = new Texture();
+	this->texture["BLOCK"] = new Texture();
+
 	this->texture["BRICK"]->loadFromFile("../Project3/Brick.png");
 	this->texture["PIPE"]->loadFromFile("../Project3/Pipe.png");
+	this->texture["BLOCK"]->loadFromFile("../Project3/Block.png");
 }
 
 void Map::initPosition(const int playerPosition, const Floor floor)
@@ -200,11 +202,23 @@ void Map::update(const int playerPosition, const Floor floor, Player& player)
 {
 	this->changePipeNum(playerPosition);
 	this->changeBrickNum(playerPosition);
-	this->initPosition(playerPosition,floor);
+
+	if (check)
+	{
+		this->spawnPipe();
+		this->spawnBrick();
+
+		check = false;
+	}
+
+	this->initPosition(playerPosition, floor);
 
 	for (int i = 0; i < this->brickNumber; i++)
 	{
-		(*this->brick[i]).update(player);
+		if ((*this->brick[i]).updateCollision(player))
+		{
+			(*this->brick[i]).getSprite().setTexture(*this->texture["BLOCK"]);
+		}
 	}
 	for (int i = 0; i < this->pipeNumber; i++)
 	{

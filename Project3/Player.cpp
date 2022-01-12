@@ -1,5 +1,7 @@
 #include "Player.h"
 
+
+
 void Player::initVar()
 {
 	this->movementSpeed = 5.f;
