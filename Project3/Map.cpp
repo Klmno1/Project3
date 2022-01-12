@@ -3,7 +3,6 @@
 #include "Map.h"
 
 using namespace std;
-bool check = true;
 Map::Map()
 {
 	this->brickNumber = BRICK1;
@@ -11,7 +10,7 @@ Map::Map()
 	this->initTexture();
 	this->spawnPipe();
 	this->spawnBrick();
-	
+
 }
 
 Map::~Map()
@@ -173,7 +172,8 @@ void Map::initPosition(const int playerPosition, const Floor floor)
 		for (int i = 0; i < this->brickNumber; i++)
 		{
 			this->brickPosition.push_back(Vector2f(
-				250.f + 2.5*i*this->brick[0]->getBrickWidth(), 250.f
+				250.f + 2.5 * i * this->brick[0]->getBrickWidth(),
+				250.f - 2 * i * this->brick[0]->getBrickHeight()
 			));
 		}
 		break;
@@ -218,10 +218,13 @@ void Map::update(const int playerPosition, const Floor floor, Player& player)
 	{
 		(*this->pipe[i]).update(player);
 	}
+	if(this->pole.updateCollision(player))
+		this->flag.update();
 }
 
-void Map::render(RenderTarget* window)
+void Map::render(RenderTarget* window, const int playerPosition)
 {
+
 	for (int i = 0; i < this->brickNumber; i++)
 	{
 		(*this->brick[i]).render(window);
@@ -230,6 +233,12 @@ void Map::render(RenderTarget* window)
 	{
 		(*this->pipe[i]).render(window);
 	}
+	if (playerPosition == LEVEL4)
+	{
+		this->pole.render(window);
+		this->flag.render(window);
+	}
+		
 }
 
 

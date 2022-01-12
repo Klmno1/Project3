@@ -46,8 +46,8 @@ void Game::render()
 	// Render 
 	this->background.show(this->window);
 	this->player.render(this->window);
+	this->map.render(this->window, this->playerPosition);
 	this->floor.render(this->window);
-	this->map.render(this->window);
 
 	this->window->display();
 }

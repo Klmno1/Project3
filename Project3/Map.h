@@ -4,6 +4,8 @@
 
 #include "Brick.h"
 #include "Pipe.h"
+#include "Pole.h"
+#include "Flag.h"
 
 using namespace std;
 using namespace sf;
@@ -22,7 +24,7 @@ enum BRCIK
 	BRICK1 = 6,
 	BRICK2 = 0,
 	BRICK3 = 8,
-	BRICK4 = 4
+	BRICK4 = 3
 };
 
 enum PIPE
@@ -43,6 +45,8 @@ private:
 	vector <Pipe*> pipe;
 	vector<Vector2f> brickPosition;
 	vector<Vector2f> pipePosition;
+	Pole pole;
+	Flag flag;
 
 public:
 	Map();
@@ -58,7 +62,7 @@ public:
 	void setPipePosition();
 
 	void update(const int playerPosition, const Floor floor, Player& player);
-	void render(RenderTarget* window);
+	void render(RenderTarget* window, const int playerPosition);
 	
 };
 
