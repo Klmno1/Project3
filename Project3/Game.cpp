@@ -2,6 +2,20 @@
 
 using namespace std;
 
+void Game::initFont()
+{
+	this->font.loadFromFile("Fonts/Dosis-Light.ttf");
+}
+
+void Game::initEndGameText()
+{
+	this->endGameText.setFont(this->font);
+	this->endGameText.setFillColor(Color::Red);
+	this->endGameText.setCharacterSize(64);
+	this->endGameText.setPosition(Vector2f(100, 200));
+	this->endGameText.setString("GAME END! EXIT THE GAME");
+}
+
 void Game::initWindow()
 {
 	this->videoMode = VideoMode(800, 600);
@@ -23,6 +37,8 @@ Game::Game()
 {
 	this->initVar();
 	this->initWindow();
+	this->initFont();
+	this->initEndGameText();
 }
 
 Game::~Game()
@@ -36,19 +52,25 @@ void Game::update()
 {
 	this->pollEvents();
 	this->player.update(this->window, this->floor.getSprite(), this->playerPosition,this->maxLevel);
-	this->map.update(this->playerPosition, this->floor, this->player);
+	this->map.update(this->playerPosition, this->floor, this->player, this->endGame);
 }
 
 void Game::render()
 {
 	this->window->clear();
 
-	// Render 
-	this->background.show(this->window);
-	this->player.render(this->window);
-	this->map.render(this->window, this->playerPosition);
-	this->floor.render(this->window);
-
+	// Render
+	if (not this->endGame)
+	{
+		this->background.show(this->window);
+		this->player.render(this->window);
+		this->map.render(this->window, this->playerPosition);
+		this->floor.render(this->window);
+	}
+	else
+	{
+		this->window->draw(this->endGameText);
+	}
 	this->window->display();
 }
 

@@ -36,9 +36,14 @@ void Flag::setPosition(Vector2f position)
 	this->sprite.setPosition(position);
 }
 
-void Flag::update()
+void Flag::update(bool& endGame)
 {
 	this->sprite.move(Vector2f(0.f, 5.f));
+	if (this->sprite.getPosition().y >= 500.f)
+	{
+		endGame = true;
+	}
+		
 }
 
 

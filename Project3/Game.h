@@ -13,6 +13,9 @@ using namespace std;
 class Game
 {
 private:
+	Text endGameText;
+	Font font;
+
 	int playerPosition;
 	int maxLevel;
 	VideoMode videoMode; // sf
@@ -25,6 +28,8 @@ private:
 	Background background;
 	Map map;
 
+	void initFont();
+	void initEndGameText();
 	void initWindow();
 	void initVar();
 

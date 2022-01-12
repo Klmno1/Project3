@@ -200,7 +200,7 @@ void Map::setPipePosition()
 	}
 }
 
-void Map::update(const int playerPosition, const Floor floor, Player& player)
+void Map::update(const int playerPosition, const Floor floor, Player& player, bool& endGame)
 {
 	this->changePipeNum(playerPosition);
 	this->changeBrickNum(playerPosition);
@@ -218,8 +218,10 @@ void Map::update(const int playerPosition, const Floor floor, Player& player)
 	{
 		(*this->pipe[i]).update(player);
 	}
-	if(this->pole.updateCollision(player))
-		this->flag.update();
+	if (this->pole.updateCollision(player))
+	{
+		this->flag.update(endGame);
+	}	
 }
 
 void Map::render(RenderTarget* window, const int playerPosition)

@@ -21,7 +21,7 @@ public:
 	int getFlagHeight();
 	void setPosition(Vector2f position);
 
-	void update();
+	void update(bool& endGame);
 	void render(RenderTarget* window);
 };
 
