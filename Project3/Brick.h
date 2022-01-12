@@ -28,7 +28,7 @@ public:
 	int getBrickHeight();
 	void setPosition(Vector2f position);
 
-	bool updateCollision(Player& player);
+	bool checkCollision(Player& player);
 	void update(Player& player);
 	void render(RenderTarget* window);
 };

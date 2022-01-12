@@ -9,6 +9,8 @@ Map::Map()
 	this->brickNumber = BRICK1;
 	this->pipeNumber = PIPE1;
 	this->initTexture();
+	this->spawnPipe();
+	this->spawnBrick();
 	
 }
 
@@ -203,19 +205,11 @@ void Map::update(const int playerPosition, const Floor floor, Player& player)
 	this->changePipeNum(playerPosition);
 	this->changeBrickNum(playerPosition);
 
-	if (check)
-	{
-		this->spawnPipe();
-		this->spawnBrick();
-
-		check = false;
-	}
-
 	this->initPosition(playerPosition, floor);
 
 	for (int i = 0; i < this->brickNumber; i++)
 	{
-		if ((*this->brick[i]).updateCollision(player))
+		if ((*this->brick[i]).checkCollision(player))
 		{
 			(*this->brick[i]).getSprite().setTexture(*this->texture["BLOCK"]);
 		}
