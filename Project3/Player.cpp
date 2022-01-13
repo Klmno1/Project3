@@ -6,6 +6,8 @@ void Player::initVar()
 {
 	this->movementSpeed = 10.f;
 	this->weed = false;
+	this->jumping = false;
+	this->gravity = 3.f;
 }
 
 void Player::initShape()

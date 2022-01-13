@@ -41,10 +41,10 @@ bool Brick::checkCollision(Player& player, int& playerPosition)
 	{
 
 		if (this->sprite.getPosition().y > player.getShape().getPosition().y
-			and this->sprite.getPosition().x <= player.getShape().getPosition().x
-			and this->sprite.getPosition().x + this->sprite.getTexture()->getSize().x  > player.getShape().getPosition().x
+			and this->sprite.getPosition().x - player.getShape().getSize().x <= player.getShape().getPosition().x
+			and this->sprite.getPosition().x + this->sprite.getTexture()->getSize().x  >= player.getShape().getPosition().x
 			)
-		{
+		{ 
 			player.getShape().setPosition(Vector2f(
 				player.getShape().getPosition().x,
 				this->sprite.getPosition().y - player.getShape().getSize().y
@@ -75,7 +75,6 @@ bool Brick::checkCollision(Player& player, int& playerPosition)
 			));
 			this->obtainProps(player, playerPosition);
 			return true;
-
 		}
 	}
 	return false;

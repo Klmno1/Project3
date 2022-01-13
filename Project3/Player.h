@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <ctime>
 
 #include "Floor.h"
 
@@ -12,6 +13,8 @@ class Player
 {
 private:
 	bool weed;
+	bool jumping;
+	int gravity;
 	RectangleShape shape; // sf
 	void initVar();
 	void initShape();

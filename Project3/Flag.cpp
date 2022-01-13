@@ -32,13 +32,17 @@ void Flag::setPosition(Vector2f position)
 	this->sprite.setPosition(position);
 }
 
-void Flag::update(bool& endGame)
+void Flag::update(bool& endGame, const int playerPosition, const int levelLast)
 {
-	this->sprite.move(Vector2f(0.f, 5.f));
-	if (this->sprite.getPosition().y >= 500.f)
+	if (playerPosition == levelLast)
 	{
-		endGame = true;
+		this->sprite.move(Vector2f(0.f, 5.f));
+		if (this->sprite.getPosition().y >= 500.f)
+		{
+			endGame = true;
+		}
 	}
+	
 		
 }
 
