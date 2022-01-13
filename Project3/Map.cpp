@@ -4,14 +4,17 @@
 
 using namespace std;
 bool check = true;
+bool check1 = true;
 
 Map::Map()
 {
 	this->brickNumber = BRICK1;
 	this->pipeNumber = PIPE1;
+	this->enemyNumber = ENEMY2;
 	this->initTexture();
 	this->spawnPipe();
 	this->spawnBrick();
+	this->spawnEnemy();
 
 }
 
@@ -26,6 +29,10 @@ Map::~Map()
 		delete i;
 	}
 	for (auto* i : this->brick)
+	{
+		delete i;
+	}
+	for (auto* i : this->enemy)
 	{
 		delete i;
 	}
@@ -95,11 +102,20 @@ void Map::spawnPipe()
 	
 }
 
+void Map::spawnEnemy()
+{
+	for (int i = 0; i < ENEMY2; i++)
+	{
+		this->enemy.push_back(new Enemy(i));
+	}
+}
+
 void Map::initTexture()
 {
 	this->texture["BRICK"] = new Texture();
 	this->texture["PIPE"] = new Texture();
 	this->texture["BLOCK"] = new Texture();
+
 
 	this->texture["BRICK"]->loadFromFile("../Project3/Brick.png");
 	this->texture["PIPE"]->loadFromFile("../Project3/Pipe.png");
@@ -138,10 +154,24 @@ void Map::initPosition(const int playerPosition, const Floor floor)
 		{
 			this->pipePosition.push_back(Vector2f(
 				100.f + static_cast<float>(i)*this->pipe[0]->getPipeWidth() + static_cast<float>(i) * 30.f,
-				350.f - i*50.f
+				350.f - static_cast <float> (i) *50.f
+			));
+		}
+
+		for (int i = 0; i < this->enemyNumber; i++)
+		{
+			this->enemyPosition.push_back(Vector2f(
+				this->pipePosition[i].x + 25.f,
+				450.f + static_cast<float>(i) * 40.f
 			));
 		}
 		
+		if (check1)
+		{
+			check1 = false;
+			this->setEnemyPosition();
+		}
+
 		break;
 
 	case LEVEL3:
@@ -224,6 +254,14 @@ void Map::setPipePosition()
 	}
 }
 
+void Map::setEnemyPosition()
+{
+	for (int i = 0; i < this->enemyNumber; i++)
+	{
+		(*this->enemy[i]).setPosition(this->enemyPosition[i]);
+	}
+}
+
 void Map::update(int& playerPosition, const Floor floor, Player& player, bool& endGame)
 {
 	for (int i = 0; i < this->brickNumber; i++)  // will change playerPosition if the player touches bricks which bring you back to beginning
@@ -243,12 +281,27 @@ void Map::update(int& playerPosition, const Floor floor, Player& player, bool& e
 	{
 		(*this->pipe[i]).update(player);
 	}
+
 	if (this->pole.updateCollision(player, playerPosition))
 	{
 		this->flag.update(endGame, playerPosition, LEVEL::LEVELLAST);
 	}
 
+	if (playerPosition == LEVEL2)
+	{
+		for (int i = 0; i < this->enemyNumber; i++)
+		{
+			(*this->enemy[i]).update();
+		}
+		
+		for (int i = 0; i < this->enemyNumber; i++)
+		{
+			(*this->enemy[i]).updateCollision(player, playerPosition, floor);
+		}
+	}
+
 	this->blackhole.updateCollision(player, playerPosition, floor);
+	
 }
 
 void Map::render(RenderTarget* window, const int playerPosition)
@@ -257,6 +310,15 @@ void Map::render(RenderTarget* window, const int playerPosition)
 	for (int i = 0; i < this->brickNumber; i++)
 	{
 		(*this->brick[i]).render(window);
+	}
+
+
+	if (playerPosition == LEVEL2)
+	{
+		for (int i = 0; i < this->enemyNumber; i++)
+		{
+			(*this->enemy[i]).render(window);
+		}
 	}
 
 	for (int i = 0; i < this->pipeNumber; i++)

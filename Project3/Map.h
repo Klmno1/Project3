@@ -7,6 +7,7 @@
 #include "Pole.h"
 #include "Flag.h"
 #include "Blackhole.h"
+#include "Enemy.h"
 
 using namespace std;
 using namespace sf;
@@ -36,16 +37,27 @@ enum PIPE
 	PIPE4 = 1
 };
 
+enum ENEMY
+{
+	ENEMY1 = 0,
+	ENEMY2 = 4,
+	ENEMY3 = 0,
+	ENEMY4 = 0
+};
+
 class Map
 {
 private:
 	int brickNumber;
 	int pipeNumber;
+	int enemyNumber;
 	map<string, Texture*> texture;
 	vector <Brick*> brick;
 	vector <Pipe*> pipe;
+	vector <Enemy*> enemy;
 	vector<Vector2f> brickPosition;
 	vector<Vector2f> pipePosition;
+	vector<Vector2f> enemyPosition;
 	Pole pole;
 	Flag flag;
 	Blackhole blackhole;
@@ -58,10 +70,12 @@ public:
 	void changePipeNum(const int playerPosition);
 	void spawnBrick();
 	void spawnPipe();
+	void spawnEnemy();
 	void initTexture();
 	void initPosition(const int playerPosition, const Floor floor);
 	void setBrickPosition();
 	void setPipePosition();
+	void setEnemyPosition();
 
 	void update(int& playerPosition, const Floor floor, Player& player, bool& endGame);
 	void render(RenderTarget* window, const int playerPosition);
