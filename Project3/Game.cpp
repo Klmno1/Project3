@@ -2,13 +2,27 @@
 
 using namespace std;
 
+void Game::initMusic()
+{
+	this->backgroundMusic.openFromFile("../Project3/Music/Background.ogg");
+	this->backgroundMusic.setLoop(true);
+	this->backgroundMusic.setVolume(60.f);
+
+}
+
 void Game::initFont()
 {
-	this->font.loadFromFile("Fonts/Dosis-Light.ttf");
+	this->font.loadFromFile("../Project3/Fonts/Dosis-Light.ttf");
 }
 
 void Game::initEndGameText()
 {
+	this->startGameText.setFont(this->font);
+	this->startGameText.setFillColor(Color::Green);
+	this->startGameText.setCharacterSize(64);
+	this->startGameText.setPosition(Vector2f(100, 200));
+	this->startGameText.setString("Start the Game \n Press Enter to start the game");
+
 	this->endGameText.setFont(this->font);
 	this->endGameText.setFillColor(Color::Red);
 	this->endGameText.setCharacterSize(64);
@@ -30,6 +44,7 @@ void Game::initVar()
 	this->maxLevel = 4;
 	this->playerPosition = 1;
 	this->endGame = false;
+	this->startGame = true;
 }
 
 // constructors & destructors
@@ -39,6 +54,7 @@ Game::Game()
 	this->initWindow();
 	this->initFont();
 	this->initEndGameText();
+	this->initMusic();
 }
 
 Game::~Game()
@@ -50,8 +66,10 @@ Game::~Game()
 
 void Game::update()
 {
+	//this->backgroundMusic.play();
+	this->now = clock();
 	this->pollEvents();
-	this->player.update(this->window, this->floor.getSprite(), this->playerPosition,this->maxLevel);
+	this->player.update(this->window, this->floor.getSprite(), this->playerPosition,this->maxLevel, this->now, this->window);
 	this->map.update(this->playerPosition, this->floor, this->player, this->endGame);
 }
 
@@ -59,18 +77,30 @@ void Game::render()
 {
 	this->window->clear();
 
-	// Render
-	if (not this->endGame)
+	if (this->startGame)
 	{
-		this->background.show(this->window);
-		this->player.render(this->window);
-		this->map.render(this->window, this->playerPosition);
-		this->floor.render(this->window);
+		this->window->draw(this->startGameText);
+		if (Keyboard::isKeyPressed(Keyboard::Enter))
+			this->startGame = false;
 	}
+
 	else
 	{
-		this->window->draw(this->endGameText);
+		if (not this->endGame)
+		{
+			this->background.show(this->window);
+			this->floor.render(this->window);
+			this->player.render(this->window);
+			this->map.render(this->window, this->playerPosition);
+		}
+		else
+		{
+			this->window->draw(this->endGameText);
+		}
 	}
+
+	// Render
+	
 	this->window->display();
 }
 

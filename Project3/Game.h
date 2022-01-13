@@ -13,6 +13,11 @@ using namespace std;
 class Game
 {
 private:
+
+	Music backgroundMusic;
+
+	clock_t now;
+	Text startGameText;
 	Text endGameText;
 	Font font;
 
@@ -20,6 +25,7 @@ private:
 	int maxLevel;
 	VideoMode videoMode; // sf
 	RenderWindow* window; // sf
+	bool startGame;
 	bool endGame;
 	Event sfmlEvent; // sf
 
@@ -28,6 +34,7 @@ private:
 	Background background;
 	Map map;
 
+	void initMusic();
 	void initFont();
 	void initEndGameText();
 	void initWindow();

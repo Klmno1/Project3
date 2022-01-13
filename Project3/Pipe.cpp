@@ -37,33 +37,33 @@ void Pipe::update(Player& player)
 
 void Pipe::updateCollision(Player& player)
 {
-	if (this->sprite.getGlobalBounds().intersects(player.getShape().getGlobalBounds()))
+	if (this->sprite.getGlobalBounds().intersects(player.getSprite().getGlobalBounds()))
 	{
 		
-		if (player.getShape().getPosition().x > this->sprite.getPosition().x and this->sprite.getPosition().y < player.getShape().getPosition().y)
+		if (player.getSprite().getPosition().x > this->sprite.getPosition().x and this->sprite.getPosition().y < player.getSprite().getPosition().y)
 		{
-			player.getShape().setPosition(
+			player.getSprite().setPosition(
 				Vector2f(
 					this->sprite.getPosition().x + this->sprite.getTexture()->getSize().x + 1.f,
-					player.getShape().getPosition().y
+					player.getSprite().getPosition().y
 				)
 			);
 		}
-		else if (player.getShape().getPosition().x < this->sprite.getPosition().x and this->sprite.getPosition().y < player.getShape().getPosition().y)
+		else if (player.getSprite().getPosition().x < this->sprite.getPosition().x and this->sprite.getPosition().y < player.getSprite().getPosition().y)
 		{
-			player.getShape().setPosition(
+			player.getSprite().setPosition(
 				Vector2f(
-					this->sprite.getPosition().x - player.getShape().getSize().x - 1.f,
-					player.getShape().getPosition().y
+					this->sprite.getPosition().x - player.getSprite().getTexture()->getSize().x - 1.f,
+					player.getSprite().getPosition().y
 				)
 			);
 		}
-		else if (this->sprite.getPosition().y > player.getShape().getPosition().y)
+		else if (this->sprite.getPosition().y > player.getSprite().getPosition().y)
 		{
-			player.getShape().setPosition(
+			player.getSprite().setPosition(
 				Vector2f(
-					player.getShape().getPosition().x,
-					this->sprite.getPosition().y -  player.getShape().getSize().y
+					player.getSprite().getPosition().x,
+					this->sprite.getPosition().y -  player.getSprite().getTexture()->getSize().y
 				)
 			);
 		}

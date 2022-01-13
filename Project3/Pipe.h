@@ -21,7 +21,6 @@ public:
 	int getPipeWidth();
 	int getPipeHeight();
 	void setPosition(Vector2f position);
-
 	void update(Player& player);
 	void updateCollision(Player& player);
 	void render(RenderTarget* window);

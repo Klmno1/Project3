@@ -141,6 +141,7 @@ void Map::initPosition(const int playerPosition, const Floor floor)
 				350.f - i*50.f
 			));
 		}
+		
 		break;
 
 	case LEVEL3:
@@ -163,6 +164,10 @@ void Map::initPosition(const int playerPosition, const Floor floor)
 			} 
 		}
 
+		this->blackhole.setPosition(Vector2f(
+			150.f,
+			floor.getSprite().getPosition().y
+		));
 		break;
 
 	case LEVELLAST:
@@ -179,15 +184,21 @@ void Map::initPosition(const int playerPosition, const Floor floor)
 			));
 		}
 
-		if (check)
+		this->pole.getSprite().setPosition(Vector2f(700.f, 50.f));
+
+		if (check) // flag 位置只要設定一次就好
 		{
-			this->pole.getSprite().setPosition(Vector2f(700.f, 50.f));
 			this->flag.getSprite().setPosition(Vector2f(
 				this->pole.getSprite().getPosition().x,
 				this->pole.getSprite().getPosition().y
 			));
 			check = false;
 		}
+
+		this->blackhole.setPosition(Vector2f(
+			250.f,
+			floor.getSprite().getPosition().y
+		));
 		
 
 		break;
@@ -237,7 +248,7 @@ void Map::update(int& playerPosition, const Floor floor, Player& player, bool& e
 		this->flag.update(endGame, playerPosition, LEVEL::LEVELLAST);
 	}
 
-	//this->blackhole.updateCollision(player, playerPosition);
+	this->blackhole.updateCollision(player, playerPosition, floor);
 }
 
 void Map::render(RenderTarget* window, const int playerPosition)
@@ -247,12 +258,20 @@ void Map::render(RenderTarget* window, const int playerPosition)
 	{
 		(*this->brick[i]).render(window);
 	}
+
 	for (int i = 0; i < this->pipeNumber; i++)
 	{
 		(*this->pipe[i]).render(window);
 	}
+
+	if (playerPosition == LEVEL3)
+	{
+		this->blackhole.render(window);
+	}
+
 	if (playerPosition == LEVELLAST)
 	{
+		this->blackhole.render(window);
 		this->pole.render(window);
 		this->flag.render(window);
 	}

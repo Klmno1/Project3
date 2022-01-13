@@ -6,6 +6,7 @@ Pole::Pole()
 {
 	this->texture.loadFromFile("../Project3/Pole.png");
 	this->sprite.setTexture(this->texture);
+	this->sprite.setPosition(Vector2f(-100.f, -100.f)); // 要等到 到 LEVELLAST 才會 setposition ( 不設 預設 0,0 待在原點太久會endgame )
 }
 
 Pole::~Pole()
@@ -36,7 +37,7 @@ void Pole::setPosition(Vector2f position)
 bool Pole::updateCollision(Player& player, const int playerPosition)
 {
 	if (this->sprite.getGlobalBounds().intersects(
-		player.getShape().getGlobalBounds()) )
+		player.getSprite().getGlobalBounds()) )
 	{
 		return true;
 	}

@@ -37,40 +37,39 @@ void Brick::setPosition(Vector2f position)
 
 bool Brick::checkCollision(Player& player, int& playerPosition)
 {
-	if (this->sprite.getGlobalBounds().intersects(player.getShape().getGlobalBounds()) )
+	if (this->sprite.getGlobalBounds().intersects(player.getSprite().getGlobalBounds()) )
 	{
 
-		if (this->sprite.getPosition().y > player.getShape().getPosition().y
-			and this->sprite.getPosition().x - player.getShape().getSize().x <= player.getShape().getPosition().x
-			and this->sprite.getPosition().x + this->sprite.getTexture()->getSize().x  >= player.getShape().getPosition().x
+		if (this->sprite.getPosition().y > player.getSprite().getPosition().y
+			and this->sprite.getPosition().x - player.getSprite().getTexture()->getSize().x <= player.getSprite().getPosition().x
+			and this->sprite.getPosition().x + this->sprite.getTexture()->getSize().x  >= player.getSprite().getPosition().x
 			)
 		{ 
-			player.getShape().setPosition(Vector2f(
-				player.getShape().getPosition().x,
-				this->sprite.getPosition().y - player.getShape().getSize().y
-			));
+			player.getSprite().setPosition(Vector2f(
+				player.getSprite().getPosition().x,
+				this->sprite.getPosition().y - player.getSprite().getTexture()->getSize().y));
 		}
 
-		else if (this->sprite.getPosition().x < player.getShape().getPosition().x)
+		else if (this->sprite.getPosition().x < player.getSprite().getPosition().x)
 		{
-			player.getShape().setPosition(Vector2f(
+			player.getSprite().setPosition(Vector2f(
 				this->sprite.getPosition().x + this->sprite.getTexture()->getSize().x,
-				player.getShape().getPosition().y
+				player.getSprite().getPosition().y
 			));
 		}
 
-		else if (this->sprite.getPosition().x > player.getShape().getPosition().x)
+		else if (this->sprite.getPosition().x > player.getSprite().getPosition().x)
 		{
-			player.getShape().setPosition(Vector2f(
-				this->sprite.getPosition().x - player.getShape().getSize().x,
-				player.getShape().getPosition().y
+			player.getSprite().setPosition(Vector2f(
+				this->sprite.getPosition().x - player.getSprite().getTexture()->getSize().x,
+				player.getSprite().getPosition().y
 			));
 		}
 
-		else if (this->sprite.getPosition().y < player.getShape().getPosition().y)
+		else if (this->sprite.getPosition().y < player.getSprite().getPosition().y)
 		{
-			player.getShape().setPosition(Vector2f(
-				player.getShape().getPosition().x,
+			player.getSprite().setPosition(Vector2f(
+				player.getSprite().getPosition().x,
 				this->sprite.getPosition().y + this->sprite.getTexture()->getSize().y
 			));
 			this->obtainProps(player, playerPosition);
@@ -91,27 +90,22 @@ void Brick::obtainProps(Player& player, int& playerPosition)
 
 	case BrickType::DEFAULT:
 		player.setWeed(false);
-		player.getShape().setFillColor(Color::Blue);
 		break;
 
 	case BrickType::ENLARGE:
 
-		player.getShape().setPosition(Vector2f(0.f, 0.f));
-		player.getShape().setSize(Vector2f(
-			2.f * player.getShape().getSize().x,
-			2.f * player.getShape().getSize().y
-		));
+		player.getSprite().setPosition(Vector2f(0.f, 0.f));
+		
 		break;
 
 	case BrickType::WEED:
 
 		player.setWeed(true);
-		player.getShape().setFillColor(Color::Red);
 		break;
 
 	case BrickType::BACKTOBEGIN:
 
-		player.getShape().setPosition(Vector2f(0.f, 0.f));
+		player.getSprite().setPosition(Vector2f(0.f, 0.f));
 		playerPosition = 1;
 		break;
 
