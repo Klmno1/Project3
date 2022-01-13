@@ -98,7 +98,10 @@ void Brick::obtainProps(Player& player, int& playerPosition)
 	case BrickType::ENLARGE:
 
 		player.getShape().setPosition(Vector2f(0.f, 0.f));
-		player.getShape().setScale(Vector2f(2.f, 2.f));
+		player.getShape().setSize(Vector2f(
+			2.f * player.getShape().getSize().x,
+			2.f * player.getShape().getSize().y
+		));
 		break;
 
 	case BrickType::WEED:

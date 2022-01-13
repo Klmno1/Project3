@@ -6,6 +6,7 @@
 #include "Pipe.h"
 #include "Pole.h"
 #include "Flag.h"
+#include "Blackhole.h"
 
 using namespace std;
 using namespace sf;
@@ -47,6 +48,7 @@ private:
 	vector<Vector2f> pipePosition;
 	Pole pole;
 	Flag flag;
+	Blackhole blackhole;
 
 public:
 	Map();

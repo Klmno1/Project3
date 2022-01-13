@@ -16,7 +16,7 @@ public:
 	Flag();
 	~Flag();
 
-	Sprite getSprite();
+	Sprite& getSprite();
 	int getFlagWidth();
 	int getFlagHeight();
 	void setPosition(Vector2f position);

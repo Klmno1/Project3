@@ -6,23 +6,21 @@
 #include "Player.h"
 using namespace sf;
 
-class Pole
+class Blackhole
 {
 private:
 	Sprite sprite;
 	Texture texture;
 
-
 public:
-	Pole();
-	~Pole();
+	Blackhole();
+	virtual ~Blackhole();
 
-	Sprite& getSprite();
-	int getPoleWidth();
-	int getPoleHeight();
-	void setPosition(Vector2f position);
-
-	bool updateCollision(Player& player, const int playerPosition);
+	void update();
+	void updateCollision(Player& player, int& playerPosition);
+	const Sprite& getSprite() const;
+	int getWidth();
+	int getHeight();
 	void render(RenderTarget* window);
 };
 

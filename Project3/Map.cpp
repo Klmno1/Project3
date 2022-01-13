@@ -3,6 +3,8 @@
 #include "Map.h"
 
 using namespace std;
+bool check = true;
+
 Map::Map()
 {
 	this->brickNumber = BRICK1;
@@ -176,9 +178,20 @@ void Map::initPosition(const int playerPosition, const Floor floor)
 				250.f - 2 * i * this->brick[0]->getBrickHeight()
 			));
 		}
+
+		if (check)
+		{
+			this->pole.getSprite().setPosition(Vector2f(700.f, 50.f));
+			this->flag.getSprite().setPosition(Vector2f(
+				this->pole.getSprite().getPosition().x,
+				this->pole.getSprite().getPosition().y
+			));
+			check = false;
+		}
+		
+
 		break;
 	}
-
 	
 	this->setBrickPosition();
 	this->setPipePosition();
@@ -219,10 +232,12 @@ void Map::update(int& playerPosition, const Floor floor, Player& player, bool& e
 	{
 		(*this->pipe[i]).update(player);
 	}
-	if (this->pole.updateCollision(player))
+	if (this->pole.updateCollision(player, playerPosition))
 	{
 		this->flag.update(endGame);
-	}	
+	}
+
+	//this->blackhole.updateCollision(player, playerPosition);
 }
 
 void Map::render(RenderTarget* window, const int playerPosition)
@@ -241,7 +256,6 @@ void Map::render(RenderTarget* window, const int playerPosition)
 		this->pole.render(window);
 		this->flag.render(window);
 	}
-		
 }
 
 

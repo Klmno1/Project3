@@ -6,17 +6,13 @@ Flag::Flag()
 {
 	this->texture.loadFromFile("../Project3/Flag.png");
 	this->sprite.setTexture(this->texture);
-	
-	this->sprite.setPosition(Vector2f(
-		736.f,0.f
-	));
 }
 
 Flag::~Flag()
 {
 }
 
-Sprite Flag::getSprite()
+Sprite& Flag::getSprite()
 {
 	return this->sprite;
 }
