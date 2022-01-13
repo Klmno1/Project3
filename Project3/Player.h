@@ -13,7 +13,6 @@ class Player
 {
 private:
 	bool weed;
-	bool jumping;
 	int gravity;
 	RectangleShape shape; // sf
 	void initVar();

@@ -6,7 +6,6 @@ void Player::initVar()
 {
 	this->movementSpeed = 10.f;
 	this->weed = false;
-	this->jumping = false;
 	this->gravity = 3.f;
 }
 
@@ -92,6 +91,8 @@ void Player::updateInput()
 {
 	//Keyboard input   moving character
 
+	this->shape.move(0.f, this->gravity);
+
 	if (Keyboard::isKeyPressed(Keyboard::Left)) // sf
 	{
 		this->shape.move(-1 * this->movementSpeed , 0.f); // move ( Speed on x-axis, Speed on y-axis ) 
@@ -108,10 +109,26 @@ void Player::updateInput()
 	{
 		this->shape.move(0.f , this->movementSpeed); 
 	}
+
+	if (Keyboard::isKeyPressed(Keyboard::Backspace))
+	{
+		this->gravity = 0;
+		int start = clock();
+		int end = 0;
+		while (true)
+		{
+			end = clock();
+			if (end - start >= 3000)
+				break;
+			else
+				this->shape.move(0.f, -1 * this->movementSpeed);
+		}
+	}
 }
 
 void Player::updateInputWeed()
 {
+	
 	if (Keyboard::isKeyPressed(Keyboard::Left)) // sf
 	{
 		this->shape.move(1 * this->movementSpeed, 0.f); // move ( Speed on x-axis, Speed on y-axis ) 
