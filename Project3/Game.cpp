@@ -18,16 +18,22 @@ void Game::initFont()
 void Game::initEndGameText()
 {
 	this->startGameText.setFont(this->font);
-	this->startGameText.setFillColor(Color::Green);
+	this->startGameText.setFillColor(Color::White);
 	this->startGameText.setCharacterSize(64);
 	this->startGameText.setPosition(Vector2f(100, 200));
-	this->startGameText.setString("Start the Game \n Press Enter to start the game");
+	this->startGameText.setString("Welcome\nPress Enter to start the game");
 
 	this->endGameText.setFont(this->font);
-	this->endGameText.setFillColor(Color::Red);
+	this->endGameText.setFillColor(Color::Green);
 	this->endGameText.setCharacterSize(64);
 	this->endGameText.setPosition(Vector2f(100, 200));
 	this->endGameText.setString("GAME END! EXIT THE GAME");
+
+	this->failGameText.setFont(this->font);
+	this->failGameText.setFillColor(Color::Red);
+	this->failGameText.setCharacterSize(64);
+	this->failGameText.setPosition(Vector2f(100, 200));
+	this->failGameText.setString("Fail! \nYOU ARE FLUNKED");
 }
 
 void Game::initWindow()
@@ -45,6 +51,7 @@ void Game::initVar()
 	this->playerPosition = 1;
 	this->endGame = false;
 	this->startGame = true;
+	this->failGame = false;
 }
 
 // constructors & destructors
@@ -70,7 +77,7 @@ void Game::update()
 	this->now = clock();
 	this->pollEvents();
 	this->player.update(this->window, this->floor.getSprite(), this->playerPosition,this->maxLevel, this->now, this->window);
-	this->map.update(this->playerPosition, this->floor, this->player, this->endGame);
+	this->map.update(this->playerPosition, this->floor, this->player, this->endGame, this->failGame);
 }
 
 void Game::render()
@@ -84,19 +91,23 @@ void Game::render()
 			this->startGame = false;
 	}
 
+	if (not this->endGame)
+	{
+		this->background.show(this->window);
+		this->floor.render(this->window);
+		this->player.render(this->window);
+		this->map.render(this->window, this->playerPosition);
+	}
 	else
 	{
-		if (not this->endGame)
-		{
-			this->background.show(this->window);
-			this->floor.render(this->window);
-			this->player.render(this->window);
-			this->map.render(this->window, this->playerPosition);
-		}
-		else
-		{
-			this->window->draw(this->endGameText);
-		}
+		this->window->clear();
+		this->window->draw(this->endGameText);
+	}
+
+	if (this->failGame)
+	{
+		this->window->clear();
+		this->window->draw(this->failGameText);
 	}
 
 	// Render

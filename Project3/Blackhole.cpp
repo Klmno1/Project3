@@ -19,12 +19,11 @@ void Blackhole::update()
 {
 }
 
-void Blackhole::updateCollision(Player& player, int& playerPosition, const Floor floor)
+void Blackhole::updateCollision(Player& player, int& playerPosition, const Floor floor, bool& failGame)
 {
 	if (this->sprite.getGlobalBounds().intersects(player.getSprite().getGlobalBounds()))
 	{
-		player.getSprite().setPosition(Vector2f(0.f, 0.f));
-		playerPosition = 1;
+		failGame = true;
 	}
 }
 

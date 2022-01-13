@@ -20,7 +20,7 @@ public:
 
 	void setPosition(Vector2f position);
 	void update();
-	void updateCollision(Player& player, int& playerPosition, const Floor floor);
+	void updateCollision(Player& player, int& playerPosition, const Floor floor, bool& failGame);
 	const Sprite& getSprite() const;
 	int getWidth();
 	int getHeight();

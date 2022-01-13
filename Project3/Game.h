@@ -19,6 +19,7 @@ private:
 	clock_t now;
 	Text startGameText;
 	Text endGameText;
+	Text failGameText;
 	Font font;
 
 	int playerPosition;
@@ -27,6 +28,7 @@ private:
 	RenderWindow* window; // sf
 	bool startGame;
 	bool endGame;
+	bool failGame;
 	Event sfmlEvent; // sf
 
 	Floor floor;
