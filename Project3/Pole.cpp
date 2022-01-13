@@ -6,14 +6,13 @@ Pole::Pole()
 {
 	this->texture.loadFromFile("../Project3/Pole.png");
 	this->sprite.setTexture(this->texture);
-	this->sprite.setPosition(Vector2f(700.f, 50.f));
 }
 
 Pole::~Pole()
 {
 }
 
-Sprite Pole::getSprite()
+Sprite& Pole::getSprite()
 {
 	return this->sprite;
 }
@@ -34,10 +33,10 @@ void Pole::setPosition(Vector2f position)
 }
 
 
-bool Pole::updateCollision(Player& player)
+bool Pole::updateCollision(Player& player, const int playerPosition)
 {
 	if (this->sprite.getGlobalBounds().intersects(
-		player.getShape().getGlobalBounds()))
+		player.getShape().getGlobalBounds()) )
 	{
 		return true;
 	}

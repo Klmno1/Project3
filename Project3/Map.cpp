@@ -3,6 +3,8 @@
 #include "Map.h"
 
 using namespace std;
+bool check = true;
+
 Map::Map()
 {
 	this->brickNumber = BRICK1;
@@ -46,7 +48,7 @@ void Map::changeBrickNum(const int playerPosition)
 		this->brickNumber = BRICK3;
 		break;
 
-	case LEVEL4:
+	case LEVELLAST:
 		this->brickNumber = BRICK4;
 		break;
 	}
@@ -70,7 +72,7 @@ void Map::changePipeNum(const int playerPosition)
 		this->pipeNumber = PIPE3;
 		break;
 
-	case LEVEL4:
+	case LEVELLAST:
 		this->pipeNumber = PIPE4;
 		break;
 	}
@@ -158,15 +160,15 @@ void Map::initPosition(const int playerPosition, const Floor floor)
 					150.f + static_cast<float>(i / 2) * 150.f,
 					static_cast <float> (floor.getSprite().getPosition().y - 2*this->brick[0]->getBrickHeight())
 				));
-			}
+			} 
 		}
 
 		break;
 
-	case LEVEL4:
+	case LEVELLAST:
 
 		this->pipePosition.push_back(Vector2f(
-			100.f, floor.getSprite().getPosition().y - 200.f
+			100.f, floor.getSprite().getPosition().y - 150.f
 		));
 
 		for (int i = 0; i < this->brickNumber; i++)
@@ -176,9 +178,20 @@ void Map::initPosition(const int playerPosition, const Floor floor)
 				250.f - 2 * i * this->brick[0]->getBrickHeight()
 			));
 		}
+
+		if (check)
+		{
+			this->pole.getSprite().setPosition(Vector2f(700.f, 50.f));
+			this->flag.getSprite().setPosition(Vector2f(
+				this->pole.getSprite().getPosition().x,
+				this->pole.getSprite().getPosition().y
+			));
+			check = false;
+		}
+		
+
 		break;
 	}
-
 	
 	this->setBrickPosition();
 	this->setPipePosition();
@@ -200,28 +213,31 @@ void Map::setPipePosition()
 	}
 }
 
-void Map::update(const int playerPosition, const Floor floor, Player& player, bool& endGame)
+void Map::update(int& playerPosition, const Floor floor, Player& player, bool& endGame)
 {
+	for (int i = 0; i < this->brickNumber; i++)  // will change playerPosition if the player touches bricks which bring you back to beginning
+	{
+		if ((*this->brick[i]).checkCollision(player, playerPosition))
+		{
+			(*this->brick[i]).getSprite().setTexture(*this->texture["BLOCK"]);
+		}
+	}
+
 	this->changePipeNum(playerPosition);
 	this->changeBrickNum(playerPosition);
 
 	this->initPosition(playerPosition, floor);
 
-	for (int i = 0; i < this->brickNumber; i++)
-	{
-		if ((*this->brick[i]).checkCollision(player))
-		{
-			(*this->brick[i]).getSprite().setTexture(*this->texture["BLOCK"]);
-		}
-	}
 	for (int i = 0; i < this->pipeNumber; i++)
 	{
 		(*this->pipe[i]).update(player);
 	}
-	if (this->pole.updateCollision(player))
+	if (this->pole.updateCollision(player, playerPosition))
 	{
-		this->flag.update(endGame);
-	}	
+		this->flag.update(endGame, playerPosition, LEVEL::LEVELLAST);
+	}
+
+	//this->blackhole.updateCollision(player, playerPosition);
 }
 
 void Map::render(RenderTarget* window, const int playerPosition)
@@ -235,12 +251,11 @@ void Map::render(RenderTarget* window, const int playerPosition)
 	{
 		(*this->pipe[i]).render(window);
 	}
-	if (playerPosition == LEVEL4)
+	if (playerPosition == LEVELLAST)
 	{
 		this->pole.render(window);
 		this->flag.render(window);
 	}
-		
 }
 
 

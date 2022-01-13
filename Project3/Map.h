@@ -6,6 +6,7 @@
 #include "Pipe.h"
 #include "Pole.h"
 #include "Flag.h"
+#include "Blackhole.h"
 
 using namespace std;
 using namespace sf;
@@ -15,7 +16,7 @@ enum LEVEL
 	LEVEL1 = 1,
 	LEVEL2,
 	LEVEL3,
-	LEVEL4,
+	LEVELLAST,
 	TOTAL_LEVEL
 };
 
@@ -47,6 +48,7 @@ private:
 	vector<Vector2f> pipePosition;
 	Pole pole;
 	Flag flag;
+	Blackhole blackhole;
 
 public:
 	Map();
@@ -61,7 +63,7 @@ public:
 	void setBrickPosition();
 	void setPipePosition();
 
-	void update(const int playerPosition, const Floor floor, Player& player, bool& endGame);
+	void update(int& playerPosition, const Floor floor, Player& player, bool& endGame);
 	void render(RenderTarget* window, const int playerPosition);
 	
 };

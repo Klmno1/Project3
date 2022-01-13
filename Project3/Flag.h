@@ -16,12 +16,12 @@ public:
 	Flag();
 	~Flag();
 
-	Sprite getSprite();
+	Sprite& getSprite();
 	int getFlagWidth();
 	int getFlagHeight();
 	void setPosition(Vector2f position);
 
-	void update(bool& endGame);
+	void update(bool& endGame, const int playerPosition, const int levelLast);
 	void render(RenderTarget* window);
 };
 

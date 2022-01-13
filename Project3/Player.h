@@ -4,6 +4,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include<Windows.h>
+#include <ctime>
+
 #include "Floor.h"
 
 using namespace sf;
@@ -11,6 +13,10 @@ using namespace sf;
 class Player
 {
 private:
+	bool weed;
+	bool jumping;
+	int gravity;
+	RectangleShape shape; // sf
 	Sprite sprite;
 	Texture texture; // sf
 	void initVar();
@@ -21,6 +27,7 @@ private:
 	void updatePlayerPosition(const RenderTarget* target,int& playerPosition, const int maxLevel);
 	void updateFloorCollision(const Sprite& floor);
 	void updateInput();
+	void updateInputWeed();
 public:
 	Player();
 	virtual ~Player();
