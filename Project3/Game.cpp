@@ -4,7 +4,7 @@ using namespace std;
 
 void Game::initFont()
 {
-	this->font.loadFromFile("Fonts/Dosis-Light.ttf");
+	this->font.loadFromFile("Fonts/Dosis-Light");
 }
 
 void Game::initEndGameText()
@@ -12,7 +12,7 @@ void Game::initEndGameText()
 	this->endGameText.setFont(this->font);
 	this->endGameText.setFillColor(Color::Red);
 	this->endGameText.setCharacterSize(64);
-	this->endGameText.setPosition(Vector2f(100, 200));
+	this->endGameText.setPosition(Vector2f(200, 300));
 	this->endGameText.setString("GAME END! EXIT THE GAME");
 }
 

@@ -53,7 +53,7 @@ void Pipe::updateCollision(Player& player)
 		{
 			player.getShape().setPosition(
 				Vector2f(
-					this->sprite.getPosition().x - player.getShape().getSize().x - 1.f,
+					this->sprite.getPosition().x - player.getShape().getTexture()->getSize().x - 1.f,
 					player.getShape().getPosition().y
 				)
 			);
@@ -63,7 +63,7 @@ void Pipe::updateCollision(Player& player)
 			player.getShape().setPosition(
 				Vector2f(
 					player.getShape().getPosition().x,
-					this->sprite.getPosition().y -  player.getShape().getSize().y
+					this->sprite.getPosition().y -  player.getShape().getTexture()->getSize().y
 				)
 			);
 		}

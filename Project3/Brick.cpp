@@ -46,8 +46,7 @@ bool Brick::checkCollision(Player& player)
 		{
 			player.getShape().setPosition(Vector2f(
 				player.getShape().getPosition().x,
-				this->sprite.getPosition().y - player.getShape().getSize().y
-			));
+				this->sprite.getPosition().y - player.getShape().getTexture()->getSize().y));
 		}
 
 		else if (this->sprite.getPosition().x < player.getShape().getPosition().x)
@@ -61,7 +60,7 @@ bool Brick::checkCollision(Player& player)
 		else if (this->sprite.getPosition().x > player.getShape().getPosition().x)
 		{
 			player.getShape().setPosition(Vector2f(
-				this->sprite.getPosition().x - player.getShape().getSize().x,
+				this->sprite.getPosition().x - player.getShape().getTexture()->getSize().x,
 				player.getShape().getPosition().y
 			));
 		}
