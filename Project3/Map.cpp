@@ -181,21 +181,21 @@ void Map::initPosition(const int playerPosition, const Floor floor)
 			if (i % 2 == 0)
 			{
 				this->brickPosition.push_back(Vector2f(
-					150.f + static_cast<float>(i / 2) * 150.f,
+					150.f + static_cast<float>(i / 2) * 200.f,
 					floor.getSprite().getPosition().y - this->brick[0]->getBrickHeight()
 				));
 			}
 			else
 			{
 				this->brickPosition.push_back(Vector2f(
-					150.f + static_cast<float>(i / 2) * 150.f,
+					150.f + static_cast<float>(i / 2) * 200.f,
 					static_cast <float> (floor.getSprite().getPosition().y - 2*this->brick[0]->getBrickHeight())
 				));
 			} 
 		}
 
 		this->blackhole.setPosition(Vector2f(
-			150.f,
+			180.f,
 			floor.getSprite().getPosition().y
 		));
 		break;
@@ -262,7 +262,7 @@ void Map::setEnemyPosition()
 	}
 }
 
-void Map::update(int& playerPosition, const Floor floor, Player& player, bool& endGame)
+void Map::update(int& playerPosition, const Floor floor, Player& player, bool& endGame, bool& failGame)
 {
 	for (int i = 0; i < this->brickNumber; i++)  // will change playerPosition if the player touches bricks which bring you back to beginning
 	{
@@ -300,7 +300,7 @@ void Map::update(int& playerPosition, const Floor floor, Player& player, bool& e
 		}
 	}
 
-	this->blackhole.updateCollision(player, playerPosition, floor);
+	this->blackhole.updateCollision(player, playerPosition, floor, failGame);
 	
 }
 

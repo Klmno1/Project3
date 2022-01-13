@@ -4,7 +4,7 @@ using namespace std;
 
 Enemy::Enemy(int enemySerial)
 {
-	this->movement = -5.f;
+	this->movement = -4.f;
 
 	switch (enemySerial)
 	{
@@ -45,7 +45,7 @@ void Enemy::update()
 	if (this->sprite.getPosition().y == 50.f)
 		this->movement = 4.f ;
 	if (this->sprite.getPosition().y == 550.f)
-		this->movement = -4.f;
+		this->movement = -2.f;
 }
 
 void Enemy::updateCollision(Player& player, int& playerPosition, const Floor floor)

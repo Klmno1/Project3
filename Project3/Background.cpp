@@ -2,7 +2,7 @@
 
 Background::Background()
 {
-	this->texture.loadFromFile("../Project3/background.png");
+	this->texture.loadFromFile("../Project3/background1.png");
 	this->sprite.setTexture(this->texture);
 }
 

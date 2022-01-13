@@ -25,7 +25,7 @@ enum BRCIK
 {
 	BRICK1 = 6,
 	BRICK2 = 0,
-	BRICK3 = 8,
+	BRICK3 = 6,
 	BRICK4 = 3
 };
 
@@ -77,7 +77,7 @@ public:
 	void setPipePosition();
 	void setEnemyPosition();
 
-	void update(int& playerPosition, const Floor floor, Player& player, bool& endGame);
+	void update(int& playerPosition, const Floor floor, Player& player, bool& endGame, bool& failGame);
 	void render(RenderTarget* window, const int playerPosition);
 	
 };

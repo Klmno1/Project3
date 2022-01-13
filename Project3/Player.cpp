@@ -8,6 +8,7 @@ void Player::initVar()
 {
 	this->movementSpeed = 5.f;
 	this->weed = false;
+	this->enLarge = false;
 	this->gravity = 10.f;
 }
 
@@ -102,54 +103,96 @@ void Player::updateInput(clock_t now)
 	//Keyboard input   moving character
 
 	this->sprite.move(0.f, this->gravity);
-
-	if (direction == 0)
+	if (not enLarge)
 	{
-		this->texture.loadFromFile("../Project3/Mario_stand_right.png");
+		if (direction == 0)
+		{
+			this->texture.loadFromFile("../Project3/Mario_stand_right.png");
+		}
+		else
+		{
+			this->texture.loadFromFile("../Project3/Mario_stand_left.png");
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Left)) // sf
+		{
+			this->sprite.move(-1 * this->movementSpeed, 0.f); // move ( Speed on x-axis, Speed on y-axis ) 
+			this->texture.loadFromFile("../Project3/Mario_walk_left.png");
+			this->texture.loadFromFile("../Project3/Mario_walk_2_left.png");
+			this->texture.loadFromFile("../Project3/Mario_walk_3_left.png");
+			this->texture.loadFromFile("../Project3/Mario_walk_2_left.png");
+			this->texture.loadFromFile("../Project3/Mario_walk_left.png");
+			direction = 1;
+		}
+		else if (Keyboard::isKeyPressed(Keyboard::Right)) // sf
+		{
+			this->sprite.move(this->movementSpeed, 0.f);
+			this->texture.loadFromFile("../Project3/Mario_walk_right.png");
+			this->texture.loadFromFile("../Project3/Mario_walk_2_right.png");
+			this->texture.loadFromFile("../Project3/Mario_walk_3_right.png");
+			this->texture.loadFromFile("../Project3/Mario_walk_2_right.png");
+			this->texture.loadFromFile("../Project3/Mario_walk_right.png");
+			direction = 0;
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Space)) // sf
+		{
+			start = clock();
+
+			this->gravity = -8.f;
+
+
+			if (direction == 0)
+			{
+				this->texture.loadFromFile("../Project3/Mario_jump_right.png");
+			}
+			if (direction == 1)
+			{
+				this->texture.loadFromFile("../Project3/Mario_jump_left.png");
+			}
+		}
 	}
 	else
 	{
-		this->texture.loadFromFile("../Project3/Mario_stand_left.png");
-	}
-
-	if (Keyboard::isKeyPressed(Keyboard::Left)) // sf
-	{
-		this->sprite.move(-1 * this->movementSpeed, 0.f); // move ( Speed on x-axis, Speed on y-axis ) 
-		this->texture.loadFromFile("../Project3/Mario_walk_left.png");
-		this->texture.loadFromFile("../Project3/Mario_walk_2_left.png");
-		this->texture.loadFromFile("../Project3/Mario_walk_3_left.png");
-		this->texture.loadFromFile("../Project3/Mario_walk_2_left.png");
-		this->texture.loadFromFile("../Project3/Mario_walk_left.png");
-		direction = 1;
-	}
-	else if (Keyboard::isKeyPressed(Keyboard::Right)) // sf
-	{
-		this->sprite.move(this->movementSpeed, 0.f);
-		this->texture.loadFromFile("../Project3/Mario_walk_right.png");
-		this->texture.loadFromFile("../Project3/Mario_walk_2_right.png");
-		this->texture.loadFromFile("../Project3/Mario_walk_3_right.png");
-		this->texture.loadFromFile("../Project3/Mario_walk_2_right.png");
-		this->texture.loadFromFile("../Project3/Mario_walk_right.png");
-		direction = 0;
-	}
-
-	if (Keyboard::isKeyPressed(Keyboard::Space) ) // sf
-	{
-		start = clock();
-
-		this->gravity = -8.f;
-
-
 		if (direction == 0)
 		{
-			this->texture.loadFromFile("../Project3/Mario_jump_right.png");
+			this->texture.loadFromFile("../Project3/BigMario_stand_right.png");
 		}
-		if (direction == 1)
+		else
 		{
-			this->texture.loadFromFile("../Project3/Mario_jump_left.png");
+			this->texture.loadFromFile("../Project3/BigMario_stand_left.png");
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Left)) // sf
+		{
+			this->sprite.move(-1 * this->movementSpeed, 0.f); // move ( Speed on x-axis, Speed on y-axis ) 
+			this->texture.loadFromFile("../Project3/BigMario_walk_left.png");
+			direction = 1;
+		}
+		else if (Keyboard::isKeyPressed(Keyboard::Right)) // sf
+		{
+			this->sprite.move(this->movementSpeed, 0.f);
+			this->texture.loadFromFile("../Project3/BigMario_walk_right.png");
+			direction = 0;
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Space)) // sf
+		{
+			start = clock();
+
+			this->gravity = -8.f;
+
+
+			if (direction == 0)
+			{
+				this->texture.loadFromFile("../Project3/BigMario_jump_right.png");
+			}
+			if (direction == 1)
+			{
+				this->texture.loadFromFile("../Project3/BigMario_jump_left.png");
+			}
 		}
 	}
-
 	if (now - start >= 200)
 	{
 		this->gravity = 10.f;
@@ -202,6 +245,11 @@ void Player::updateInputWeed(clock_t now)
 	}
 
 	this->sprite.rotate(15.f);
+}
+
+void Player::setenLarge(bool enLarge)
+{
+	this->enLarge = enLarge;
 }
 
 void Player::update(const RenderTarget* target, const Sprite floor, int& playerPosition, const int maxLevel, clock_t now, RenderTarget* window)

@@ -93,8 +93,7 @@ void Brick::obtainProps(Player& player, int& playerPosition)
 		break;
 
 	case BrickType::ENLARGE:
-
-		player.getSprite().setPosition(Vector2f(0.f, 0.f));
+		player.setenLarge(true);
 		
 		break;
 

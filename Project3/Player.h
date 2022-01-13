@@ -15,6 +15,7 @@ class Player
 {
 private:
 	clock_t start;
+	bool enLarge;
 	bool weed;
 	int gravity;
 	Sprite sprite;
@@ -37,6 +38,7 @@ public:
 	Sprite& getSprite();
 	/* int getWidth();
 	int getHeight();*/
+	void setenLarge(bool enLarge);
 	void update(const RenderTarget* target, const Sprite floor,int& playerPosition,const int maxLevel, clock_t now, RenderTarget* window);
 	
 	void render(RenderTarget* target); // sf
