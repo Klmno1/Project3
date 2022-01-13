@@ -200,20 +200,21 @@ void Map::setPipePosition()
 	}
 }
 
-void Map::update(const int playerPosition, const Floor floor, Player& player, bool& endGame)
+void Map::update(int& playerPosition, const Floor floor, Player& player, bool& endGame)
 {
+	for (int i = 0; i < this->brickNumber; i++)  // will change playerPosition if the player touches bricks which bring you back to beginning
+	{
+		if ((*this->brick[i]).checkCollision(player, playerPosition))
+		{
+			(*this->brick[i]).getSprite().setTexture(*this->texture["BLOCK"]);
+		}
+	}
+
 	this->changePipeNum(playerPosition);
 	this->changeBrickNum(playerPosition);
 
 	this->initPosition(playerPosition, floor);
 
-	for (int i = 0; i < this->brickNumber; i++)
-	{
-		if ((*this->brick[i]).checkCollision(player))
-		{
-			(*this->brick[i]).getSprite().setTexture(*this->texture["BLOCK"]);
-		}
-	}
 	for (int i = 0; i < this->pipeNumber; i++)
 	{
 		(*this->pipe[i]).update(player);

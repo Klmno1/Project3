@@ -4,13 +4,16 @@
 #include <SFML/System.hpp>
 
 #include "Player.h"
+
 using namespace sf;
 
 enum BrickType
 {
-	BREAKABLE = 0,
-	UNBREAKABLE,
-	NUMOFTYPES
+	DEFAULT = 0,
+	ENLARGE,
+	WEED,
+	BACKTOBEGIN,
+	NUMOFTYPE
 };
 
 class Brick
@@ -28,7 +31,8 @@ public:
 	int getBrickHeight();
 	void setPosition(Vector2f position);
 
-	bool checkCollision(Player& player);
+	void obtainProps(Player& player, int& playerPosition);
+	bool checkCollision(Player& player, int& playerPosition);
 	void update(Player& player);
 	void render(RenderTarget* window);
 };

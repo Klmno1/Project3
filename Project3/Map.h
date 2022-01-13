@@ -61,7 +61,7 @@ public:
 	void setBrickPosition();
 	void setPipePosition();
 
-	void update(const int playerPosition, const Floor floor, Player& player, bool& endGame);
+	void update(int& playerPosition, const Floor floor, Player& player, bool& endGame);
 	void render(RenderTarget* window, const int playerPosition);
 	
 };

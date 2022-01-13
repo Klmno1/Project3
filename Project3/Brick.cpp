@@ -1,13 +1,14 @@
 #include "Brick.h"
 
 #include <iostream>
+#include <ctime>
 using namespace std;
 
 Brick::Brick(Texture* texture)
 {
 	this->sprite.setTexture(*texture);
 	//this->sprite.scale(0.7f, 0.7f);
-	this->type = BrickType::BREAKABLE;
+	this->type = rand() % BrickType::NUMOFTYPE;
 }
 
 Brick::~Brick()
@@ -34,9 +35,9 @@ void Brick::setPosition(Vector2f position)
 	this->sprite.setPosition(position);
 }
 
-bool Brick::checkCollision(Player& player)
+bool Brick::checkCollision(Player& player, int& playerPosition)
 {
-	if (this->sprite.getGlobalBounds().intersects(player.getShape().getGlobalBounds()) and this->type == BREAKABLE)
+	if (this->sprite.getGlobalBounds().intersects(player.getShape().getGlobalBounds()) )
 	{
 
 		if (this->sprite.getPosition().y > player.getShape().getPosition().y
@@ -72,6 +73,7 @@ bool Brick::checkCollision(Player& player)
 				player.getShape().getPosition().x,
 				this->sprite.getPosition().y + this->sprite.getTexture()->getSize().y
 			));
+			this->obtainProps(player, playerPosition);
 			return true;
 
 		}
@@ -81,6 +83,37 @@ bool Brick::checkCollision(Player& player)
 
 void Brick::update(Player& player)
 {
+}
+
+void Brick::obtainProps(Player& player, int& playerPosition)
+{
+	switch (this->type)
+	{
+
+	case BrickType::DEFAULT:
+		player.setWeed(false);
+		player.getShape().setFillColor(Color::Blue);
+		break;
+
+	case BrickType::ENLARGE:
+
+		player.getShape().setPosition(Vector2f(0.f, 0.f));
+		player.getShape().setScale(Vector2f(2.f, 2.f));
+		break;
+
+	case BrickType::WEED:
+
+		player.setWeed(true);
+		player.getShape().setFillColor(Color::Red);
+		break;
+
+	case BrickType::BACKTOBEGIN:
+
+		player.getShape().setPosition(Vector2f(0.f, 0.f));
+		playerPosition = 1;
+		break;
+
+	}
 }
 
 void Brick::render(RenderTarget* window)
